@@ -23,6 +23,7 @@ public class GunBehaviour : MonoBehaviour {
 
     void Start() {
         ammoCount = ammoMax;
+        counter = GameObject.Find("CurrentAmmo").GetComponent<Text>();
     }
 
     void Update() {

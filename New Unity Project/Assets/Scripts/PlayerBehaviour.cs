@@ -7,6 +7,8 @@ public class PlayerBehaviour : MonoBehaviour
 {
     public GameObject gun;
     private float angle;
+    public GameObject gunPickup;
+
 
     void Update() {
         /*Getting position of mouse for gun rotation/aiming*/
@@ -31,6 +33,13 @@ public class PlayerBehaviour : MonoBehaviour
         if ((gun.GetComponent<GunBehaviour>().ammoCount < gun.GetComponent<GunBehaviour>().ammoMax) && Input.GetKeyDown(KeyCode.R)) {
             gun.GetComponent<GunBehaviour>().Reload();
         }
+        if ((Input.GetKeyDown(KeyCode.E)) && (gunPickup != null)) {
+            Destroy(gun);
+            gunPickup.transform.parent = gameObject.transform;
+            gun = gunPickup;
+            gun.GetComponent<Collider>().enabled = false;
+            gun.transform.position = new Vector3(gameObject.transform.position.x,gameObject.transform.position.y,-0.5f);
+        }
     }
 
     private void Project(Vector3 mouse_pos) {
@@ -45,6 +54,18 @@ public class PlayerBehaviour : MonoBehaviour
         Debug.Log("Collision!");
         if (other.tag == "Instakill") {
             Die();
+        }
+        if (other.tag == "Pickup") {
+            Debug.Log("Collision with pistol!");
+            gunPickup = other.gameObject;
+            
+        }
+    }
+
+    void onTriggerExit(Collider other) {
+        if (other.tag == "Pickup") {
+            Debug.Log("Leaving collision with pistol!");
+            gunPickup = null;
         }
     }
 

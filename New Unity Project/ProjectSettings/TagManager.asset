@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Instakill
+  - Pickup
   layers:
   - Default
   - TransparentFX
