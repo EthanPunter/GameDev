@@ -23,11 +23,19 @@ public class GunBehaviour : MonoBehaviour {
 
     void Start() {
         ammoCount = ammoMax;
-        counter = GameObject.Find("CurrentAmmo").GetComponent<Text>();
+    }
+
+    public void setUI(Text UI) {
+        counter = UI;
     }
 
     void Update() {
-        counter.text = ammoCount.ToString() + "/" + ammoMax.ToString();
+        if (counter != null && ammoCount > 0) {
+            counter.text = ammoCount.ToString() + "/" + ammoMax.ToString();
+        }
+        else if (ammoCount <= 0) {
+            counter.text = "Press 'R' to reload!";
+        }
     }
 
     public void RotateGun(float angle) {
@@ -44,9 +52,7 @@ public class GunBehaviour : MonoBehaviour {
         transform.rotation = Quaternion.Euler(angle, 90f, 0f);
     }
     public void Fire(float angle) {
-        if (ammoCount == 0) {
-            canShoot = false;
-            Reload();
+        if (ammoCount <= 0) {
             return;
         }
         if (canShoot) {
