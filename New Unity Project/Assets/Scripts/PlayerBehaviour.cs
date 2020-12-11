@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -39,6 +40,7 @@ public class PlayerBehaviour : MonoBehaviour
             gun = gunPickup;
             gun.GetComponent<Collider>().enabled = false;
             gun.transform.position = new Vector3(gameObject.transform.position.x,gameObject.transform.position.y,-0.5f);
+            gun.GetComponent<GunBehaviour>().setUI(GameObject.Find("CurrentAmmo").GetComponent<Text>());
         }
     }
 
